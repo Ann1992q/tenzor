@@ -1,6 +1,8 @@
 from selenium import webdriver 
 from selenium.webdriver.common.by import By
 from pages.tenzor_page import TenzorButtonPage
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 
 #ЦЕЛЬ: "НАЙТИ БАННЕР ТЕНЗОР И КЛИКНУТЬ ПО НЕМУ"
@@ -22,15 +24,13 @@ def test_tenzor_click(browser):
     
     page_tenzor.button3().click()
     
-    from selenium.webdriver.support.ui import WebDriverWait
-    from selenium.webdriver.support import expected_conditions as EC
-
-    # Ждём появления новой вкладки
+    
+    # Ожидание появления новой вкладки
     WebDriverWait(browser, 10).until(
         lambda d: len(d.window_handles) > 1
     )
 
-    # Переключаемся на новую вкладку
+    # Переключение на новую вкладку
     for window_handle in browser.window_handles:
         if window_handle != original_window:
             browser.switch_to.window(window_handle)
@@ -46,7 +46,6 @@ def test_tenzor_click(browser):
     print("Current URL after switch:", current_url)
         
     
-    print("Current URL after click:", browser.current_url)  # Отладочный вывод
-    time.sleep(5)
+   
     
     

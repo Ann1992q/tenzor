@@ -1,5 +1,7 @@
 from selenium import webdriver 
 from pages.strengthInPeoplr_page import StrengthButtonPage
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 
 
@@ -25,9 +27,7 @@ def test_link(browser):
     #Переход на новую страницу по ссылке "Подробнее"
     page_strengthInPeople.more_details().click()
 
-    from selenium.webdriver.support.ui import WebDriverWait
-    from selenium.webdriver.support import expected_conditions as EC
-    
+       
     # Ждём, пока загрузится страница https://tensor.ru/about
     WebDriverWait(browser, 10).until(
         EC.url_to_be("https://tensor.ru/about")
