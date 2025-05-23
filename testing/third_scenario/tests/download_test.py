@@ -3,12 +3,8 @@ from selenium.webdriver.common.by import By
 from pages.download_page import DownloadPage
 
 
-
-
 #ЦЕЛЬ: ПЕРЕХОД НА https://saby.ru;
 #В Footer'e ПОИСК И ПЕРЕХОД НА "СКАЧАТЬ ЛОКАЛЬНЫЕ ВЕРСИИ"
-
-
 
 
 def test_button_download(browser):
@@ -23,6 +19,7 @@ def test_button_download(browser):
     
     
     #Проверка, что ссылка "Скачать локальные версии" кликабельна
+    #Переход по ссылке "Скачать локальные версии"
 def test_link_download_clicked(browser):
     page = DownloadPage(browser)
     page.open()

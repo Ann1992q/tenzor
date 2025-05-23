@@ -3,6 +3,10 @@ import time
 import pytest
 from pages.saby_plugin_page import SabyPluginPage
 
+#ЦЕЛИ: СКАЧАТЬ ПЛАГИН ДЛЯ WINDOWS, ВЕБ-УСТАНОВЩИК В ПАПКУ С ДАННЫМ ТЕСТОМ
+# УБИДИТЬСЯ, ЧТО ПЛАГИН СКАЧАЛСЯ
+#СРАВНИТЬ РАЗМЕР СКАЧАННОГО ФАЙЛА В МЕГАБАЙТАХ; 
+#ОН ДОЛЖЕН СОВПАДАТЬ С УКАЗАННЫМ НА САЙТЕ.
 
 def wait_for_file(download_dir, extension=".exe", timeout=30):
     start_time = time.time()
@@ -14,7 +18,7 @@ def wait_for_file(download_dir, extension=".exe", timeout=30):
         time.sleep(1)
     raise TimeoutError(f"Файл с расширением {extension} не найден за {timeout} секунд")
 
-
+#скачивание плагина
 def test_download_saby_plugin(browser, request):
     test_dir = os.path.dirname(request.path)
     page = SabyPluginPage(browser, test_dir)
