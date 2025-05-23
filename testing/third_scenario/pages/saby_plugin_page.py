@@ -8,7 +8,8 @@ import re
 
 
 class SabyPluginPage(BasePageForSaby):
-
+            
+    # Локаторы элементов на странице
     BTN_SABY_PLUGIN = (By.CSS_SELECTOR, '[data-id="plugin"]')
     BTN_WINDOWS = (By.XPATH,
     '//span[contains(text(), "Windows")]/ancestor::div[@data-id="default"]')
@@ -35,10 +36,16 @@ class SabyPluginPage(BasePageForSaby):
             print("Windows уже выбрана")
 
     def click_download(self):
+        #Кликает по ссылке 'Скачать (Exe 10.37 МБ)
         self.find(*self.BTN_DOWNLOAD).click()
 
-    #Размер скаченного файла
+  
     def get_downloaded_file_size(self, extension: str = ".exe") -> float:
+        """
+        Возвращает размер скаченного файла в МБ.
+        :param extension: расширение файла для поиска
+        :return: размер файла в МБ
+        """
         download_dir = self.get_download_directory()
         for file in os.listdir(download_dir):
             if file.endswith(extension) and not file.endswith(".crdownload"):
@@ -47,8 +54,12 @@ class SabyPluginPage(BasePageForSaby):
                 return round(size_bytes / (1024 * 1024), 2)
         raise FileNotFoundError("Файл не найден")
     
-    #Размер файла на сайте
+    
     def get_file_size_from_site(self) -> float:
+        """
+        Парсит размер файла с кнопки 'Скачать'.
+        Поддерживает форматы: 'МБ' или 'MB'
+        """
         text = self.find(*self.BTN_DOWNLOAD).text.strip()
         match = re.search(r'(\d+[\.,]?\d*)\s*[МM][БB]', text, re.IGNORECASE)
         if not match:

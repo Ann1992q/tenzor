@@ -1,13 +1,15 @@
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait 
+
 
 
 class WorkingButtonPage(BasePage):
     
+    # Локатор заголовка "Работаем"
     weAreWorking = (By.CSS_SELECTOR, '.tensor_ru-About__block3 .tensor_ru-header-h2')
+    # Локатор всех изображений в разделе "Работаем"
     photo_locator = (By.CSS_SELECTOR, '.tensor_ru-About__block3 > .s-Grid-container img')
 
 
@@ -15,16 +17,20 @@ class WorkingButtonPage(BasePage):
         super().__init__(browser)
 
     def open(self):
+        # Открываем страницу "О компании" на Tensor.ru
         self.browser.get('https://tensor.ru/about')
+    
     def working(self):
-        # Явное ожидание + прокрутка
+        
+        # Ожидаем появление заголовка "Работаем" и прокручиваем к нему
         element = WebDriverWait(self.browser, 5).until(
             EC.visibility_of_element_located(self.weAreWorking)
         )
         self.browser.execute_script("arguments[0].scrollIntoView();", element)
         
+        # Проверяем, что текст соответствует ожидаемому
         assert element.text.strip() == "Работаем", \
-        f"Ожидался текст 'Работаем', получено: '{element.text}'"
+            f"Ожидался текст 'Работаем', получено: '{element.text}'"
         
         return element
         
@@ -56,5 +62,5 @@ class WorkingButtonPage(BasePage):
             assert size['height'] == first_height, \
                 f"Высота фото {i+1} отличается: {size['height']} != {first_height}"
 
-        print("Все фотографии имеют одинаковый размер")
+
    

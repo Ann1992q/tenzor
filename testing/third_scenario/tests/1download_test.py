@@ -3,8 +3,8 @@ from selenium.webdriver.common.by import By
 from pages.download_page import DownloadPage
 
 
-#ЦЕЛЬ: ПЕРЕХОД НА https://saby.ru;
-#В Footer'e ПОИСК И ПЕРЕХОД НА "СКАЧАТЬ ЛОКАЛЬНЫЕ ВЕРСИИ"
+#ЦЕЛЬ: переход на https://saby.ru и
+#в Footer'e поиск и переход на "Скачать локальные версии"
 
 
 def test_button_download(browser):
@@ -24,7 +24,8 @@ def test_link_download_clicked(browser):
     page = DownloadPage(browser)
     page.open()
     page.link_download().click()
-    print('ссылка кликабельна. Переход по ссылке "Скачать локальные версии"')
+    assert "download" in browser.current_url.lower(), "Не перешли на страницу загрузки"
+    print('Ссылка кликабельна. Выполнен переход на страницу загрузки')
 
    
 

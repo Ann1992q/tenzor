@@ -1,21 +1,15 @@
 from selenium import webdriver 
 from selenium.webdriver.common.by import By
-from pages.contacts_page import ContactsButtonPage
+from pages.regions_page import RegionsPage
 import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pytest
 
-#ЦЕЛЬ: ПЕРЕХОД В РАЗДЕЛ "КОНТАКТЫ";
-#ПРОВЕРКА, ЧТО ОПРЕДЕЛИЛСЯ ТВОЙ РЕГИОН И СПИСОК ПАРТНЕРОВ;
-#ИЗМЕНЕНИЕ ТЕКУЩЕГО РЕГИОНА НА КАМЧАТСКИЙ КРАЙ, СПИСКА ПАРТНЕРОВ
-#URL И TITLE СОДЕРЖИТ ИНФОРМАЦИЮ ВЫБРАННОГО РЕГИОНА
 
-
-
-#Переход в раздел "Контакты"
+#ЦЕЛЬ: Переход в раздел "Контакты"
 def test_button_contacts(browser):
-    page_contacts = ContactsButtonPage(browser)
+    page_contacts = RegionsPage(browser)
     page_contacts.open()
     page_contacts.button1().click()
         
@@ -26,10 +20,9 @@ def test_button_contacts(browser):
     print('Переход в раздел "Контакты".')
 
       
-    # Получаем и выводим регион
+#ЦЕЛЬ: Проверка, что определился твой регион и список партнеров
     myRegion = page_contacts.region()
-    
-    
+        
     # Получаем список партнеров
     partner_names = page_contacts.get_partner_names()
     print("Найденные партнеры:")
@@ -41,7 +34,7 @@ def test_button_contacts(browser):
     print(f"Найдено партнеров: {len(partner_names)}")
 
 
-    #Изменение текущего региона на Камчатский край
+#ЦЕЛЬ: Изменение текущего региона на Камчатский край, списка партнеров
     #Клик по текущему региону
     current_region = browser.find_element(*page_contacts.my_region)
     current_region.click()
@@ -83,6 +76,7 @@ def test_button_contacts(browser):
     assert len(partner_namesKK) > 0, "Список партнеров пуст или не найден"
     print(f"Найдено партнеров: {len(partner_namesKK)}")
 
+#ЦЕЛЬ: URL И TITLE содержат информацию выбранного региона
     # Ждём изменения URL
     try:
         WebDriverWait(browser, 10).until(
@@ -109,10 +103,3 @@ def test_button_contacts(browser):
     current_title = browser.title
     assert "Камчатский край" in current_title, f"Title не содержит 'Камчатский край': {current_title}"
     print(f"Заголовок содержит информацию о регионе: {current_title}")
-    
-    
-    
-   
-    
-
-    
