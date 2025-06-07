@@ -1,4 +1,4 @@
-from pages.base_page import BasePageForSaby
+from base_page import BasePageForSaby
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 import time
