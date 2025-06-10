@@ -16,8 +16,7 @@ class StrengthPage(BasePage):
         strength (tuple): Локатор заголовка блока "Сила в людях".
         more_details (tuple): Локатор ссылки "Подробнее" под блоком.
     """
-    
-    
+        
     strength = (By.CSS_SELECTOR, '.tensor_ru-Index__block4-content > p:first-of-type')
     
     more_details = (By.CSS_SELECTOR, '.tensor_ru-Index__block4-content .tensor_ru-link') 

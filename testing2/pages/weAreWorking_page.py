@@ -7,7 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 class WorkingPage(BasePage):
     """
-    Page Object для работы с разделом "Работаем" на странице https://tensor.ru/about.
+    Page Object для работы с разделом "Работаем" на странице tensor.ru/about.
 
     Предоставляет методы для проверки наличия заголовка,
     получения всех изображений и проверки их одинакового размера.

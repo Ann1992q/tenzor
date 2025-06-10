@@ -18,8 +18,7 @@ class ContactsPage(BasePage):
     """
     
     contacts = (By.CLASS_NAME, 'sbis_ru-Header__menu-link')
-    
-    
+        
     contacts_more = (By.CLASS_NAME, 'sbisru-Header-ContactsMenu__arrow-icon')
 
     def __init__(self, browser):

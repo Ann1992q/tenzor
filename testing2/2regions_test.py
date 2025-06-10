@@ -35,13 +35,7 @@ def test_partner_names(region_page):
         
 #ЦЕЛЬ: Выбор региона "Камчатский край" и проверка списка партнеров
 def test_select_kamchatka_region(region_page):   
-    print("Выбираем регион 'Камчатский край'")
-    region_page.select_kamchatka_region()
-
-    partner_names_kamchatka = region_page.get_partner_names_kamchatka()
-    print("Найденные партнеры (Камчатский край):")
-    for name in partner_names_kamchatka:
-        print(f"- {name}")
+    region_page.select_region("Камчатский край")
 
 # ЦЕЛЬ: Проверить, что URL и TITLE содержат информацию о выбранном регионе
     WebDriverWait(region_page.browser, 15).until(

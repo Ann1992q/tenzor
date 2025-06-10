@@ -67,10 +67,26 @@ class RegionsPage(BasePage):
         element.click()
     
     def get_current_url(self):
+        """
+        Возвращает текущий URL-адрес открытой страницы.
+
+        Используется для проверки того, что переход на страницу был выполнен корректно.
+
+        Returns:
+            str: текущий URL браузера
+        """
         return self.browser.current_url
     
     def get_current_region_text(self):
-        """Получает текст текущего региона, каждый раз заново находя элемент."""
+        """
+        Получает текст текущего региона из элемента на странице.
+
+        Метод явно ожидает появления элемента с регионом (в течение 10 секунд),
+        чтобы гарантировать корректное получение текста после возможных изменений на странице.
+
+        Returns:
+            str: Текст региона с обрезанными пробелами по краям.
+        """
         element = WebDriverWait(self.browser, 10).until(
             EC.visibility_of_element_located(self.my_region)
         )
@@ -89,24 +105,29 @@ class RegionsPage(BasePage):
         return [el.text.strip() for el in elements if el.text.strip()]
        
     
-    def select_kamchatka_region(self):
+    def select_region(self, region_name):
+        """
+        Выбирает указанный регион из выпадающего списка.
+
+        :param region_name: Название региона (например, "Камчатский край")
+        """
         # 1. Открыть выпадающий список регионов
         region_dropdown = WebDriverWait(self.browser, 15).until(
             EC.element_to_be_clickable(self.my_region)
         )
         region_dropdown.click()
 
-        # 2. Ждём появления пункта Камчатский край
+        # 2. Ждём появления нужного региона
         kamchatka_element = WebDriverWait(self.browser, 15).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, '[title="Камчатский край"]'))
+            EC.visibility_of_element_located((By.CSS_SELECTOR, f'[title="{region_name}"]'))
         )
 
         # 3. Клик через JS
         self.browser.execute_script("arguments[0].scrollIntoView({block: 'center'});", kamchatka_element)
         self.browser.execute_script("arguments[0].click();", kamchatka_element)
-        
-        print("Регион 'Камчатский край' успешно выбран")
-        
+
+        print(f"Регион '{region_name}' успешно выбран")
+            
             
     def get_partner_names_kamchatka(self):
         """
