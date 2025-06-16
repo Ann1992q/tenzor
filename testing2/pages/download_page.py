@@ -4,22 +4,27 @@ from selenium.webdriver.common.by import By
 
 class DownloadPage(BasePage):
 
+    """
+    Page Object для работы с кнопкой 'Скачать локальные версии' на главной странице Saby.ru.
+    
+    Предоставляет методы для проверки наличия и клика по ссылке "Скачать локальные версии"
+    """
+
     # Локатор ссылки "Скачать локальные версии"  
-    lk_download = (By.LINK_TEXT, 'Скачать локальные версии')
+    download_link_locator = (By.LINK_TEXT, 'Скачать локальные версии')
 
-
-    def __init__(self, browser):
-        super().__init__(browser)
-
-    def open(self):
-        self.browser.get('https://saby.ru')
 
     def link_download(self):
-        return self.find(*self.lk_download)
+        return self.find_visible(*self.download_link_locator)
+
+    def is_download_link_displayed(self):
+        """Проверяет, отображается ли ссылка 'Скачать локальные версии'"""
+        self.link_download()
+        return True
     
-    def link_download_is_displayed(self):
-        #Проверяет, отображается ли ссылка 'Скачать локальные версии'.
-        return self.link_download().is_displayed()
-    
+    def click_download_link(self):
+        """Кликает по ссылке 'Скачать локальные версии'"""
+        link = self.find_clickable(*self.download_link_locator)
+        link.click()
     
     
