@@ -13,12 +13,20 @@ import pytest
 import os
 
 def _configure_browser(download_dir: str = None):
+    """Конфигурирует опции Chrome для автоматизации и загрузок.
+
+    Args:
+        download_dir: Путь к директории для загрузок.
+
+    Returns:
+        Options: Настроенные опции Chrome.
+    """
     chrome_options = Options()
 
     if download_dir:
         prefs = {
             "download.default_directory": download_dir,
-            "download.prompt_for_download": False,       # ❌ Не спрашивать "Сохранить"
+            "download.prompt_for_download": False,       # Не спрашивать "Сохранить"
             "download.directory_upgrade": True,
             "safebrowsing.enabled": True,
             "profile.default_content_settings.popups": 0,
@@ -37,6 +45,7 @@ def _configure_browser(download_dir: str = None):
 
 @pytest.fixture()
 def browser():
+    """Фикстура запуска браузера без настройки директории загрузок."""
     options = _configure_browser()
     chrome_browser = webdriver.Chrome(options=options)
     chrome_browser.implicitly_wait(10)
@@ -47,6 +56,14 @@ def browser():
 
 @pytest.fixture()
 def browser_with_download(request):
+    """Фикстура запуска браузера с настройкой директории загрузок.
+
+    Args:
+        request: Объект pytest.request для получения пути теста.
+
+    Yields:
+        WebDriver: Настроенный экземпляр браузера.
+    """
     download_dir = os.path.join(os.path.dirname(request.path), "downloads")
     os.makedirs(download_dir, exist_ok=True)
 

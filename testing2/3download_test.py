@@ -16,22 +16,20 @@ import os
 
 
 def test_button_download(download_page):
-       
-    #Поиск элемента "Скачать локальные версии"
+    """Проверяет наличие ссылки 'Скачать локальные версии'."""   
     assert download_page.is_download_link_displayed(), '"Скачать локальные версии" не найдена на странице'
     print('"Скачать локальные версии" есть на странице')
     
     
-    #Проверка, что ссылка "Скачать локальные версии" кликабельна
-    #Переход по ссылке "Скачать локальные версии"
 def test_link_download_clicked(download_page):
+    """Проверяет переход по ссылке 'Скачать локальные версии'."""
     download_page.click_download_link()
     assert "download" in download_page.current_url(), "Не перешли на страницу загрузки"
     print('Ссылка кликабельна. Выполнен переход на страницу загрузки')
 
 
-#скачивание плагина
 def test_download_saby_plugin(plugin_page):
+    """Проверяет скачивание плагина СБИС для Windows и сравнивает размер."""
     print("URL страницы:", plugin_page.current_url())
     print("Папка загрузки:", plugin_page.get_download_directory())
 

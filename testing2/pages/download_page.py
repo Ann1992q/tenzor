@@ -15,10 +15,19 @@ class DownloadPage(BasePage):
 
 
     def link_download(self):
+        """Находит видимую ссылку 'Скачать локальные версии'.
+
+        Returns:
+            WebElement: Ссылка.
+        """
         return self.find_visible(*self.download_link_locator)
 
     def is_download_link_displayed(self):
-        """Проверяет, отображается ли ссылка 'Скачать локальные версии'"""
+        """Проверяет, отображается ли ссылка 'Скачать локальные версии'.
+
+        Returns:
+            bool: True, если ссылка отображается.
+        """
         self.link_download()
         return True
     
