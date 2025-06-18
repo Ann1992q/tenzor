@@ -1,6 +1,5 @@
 from base_page import BasePage
 from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.webdriver import WebDriver
 from utils import wait_for_file
 import os
 import re
@@ -21,8 +20,8 @@ class SabyPluginPage(BasePage):
 
     def click_saby_plugin(self):
         """Кликает по кнопке 'Плагин СБИС' для раскрытия опций."""
+        self.scroll_to(*self.btn_saby_plugin)
         plugin_btn = self.find_clickable(*self.btn_saby_plugin)
-        self.scroll_to(plugin_btn)
         plugin_btn.click()
 
     def select_windows_if_not_selected(self):
