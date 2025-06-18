@@ -59,12 +59,25 @@ class BasePage:
             EC.visibility_of_element_located((by, value))
         )
     
-    def scroll_to(self, element):
-        """Прокручивает страницу так, чтобы указанный элемент был виден.
+    def scroll_to(self, by, value, timeout=15):
+        """
+        Прокручивает страницу так, чтобы указанный элемент стал видимым.
+
+        Находит элемент с помощью заданных локаторов и прокручивает к нему,
+        используя JavaScript (arguments[0].scrollIntoView).
 
         Args:
-            element: Целевой WebElement.
+            by (selenium.webdriver.common.by.By): Метод поиска элемента (например, By.ID, By.CSS_SELECTOR).
+            value (str): Значение локатора, по которому будет найден элемент.
+            timeout (int, optional): Время ожидания элемента в секундах. По умолчанию 15.
+
+        Returns:
+            WebElement: Найденный и прокрученный элемент.
+
+        Raises:
+            TimeoutException: Если элемент не станет видимым за указанное время.
         """
+        element = self.find_visible(by,value, timeout)
         self.browser.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
 
     def find_present(self, by, value, timeout=15):

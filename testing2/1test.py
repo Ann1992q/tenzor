@@ -18,13 +18,10 @@ def test_btn_contacts_clicked(contacts_page):
     
     # Проверяем наличие кнопки "ещё"
     assert contacts_page.btn_contacts_more().is_displayed(), "Кнопка 'ещё' не найдена"
-    print('Кнопка Контакты-еще найдена')
-    
+        
     #Кликаем по кнопке "ещё"
     contacts_page.btn_contacts_more_click()
-    print('кнопка Контакты-еще кликабельна.')
     print('Успешно выполнен переход в раздел "Контакты"')
-
 
 # ЦЕЛЬ: Проверить наличие блока "Сила в людях"
 def test_block_strength(strengthInPeoplr_page):
@@ -33,7 +30,7 @@ def test_block_strength(strengthInPeoplr_page):
 
 # Проверяем текст блока
     expected_text = "Сила в людях"
-    actual_text = strengthInPeoplr_page.block_strength().text.strip()
+    actual_text = strengthInPeoplr_page.get_text(strengthInPeoplr_page.block_strength())
     assert actual_text == expected_text, \
         f"Ожидался текст '{expected_text}', получено: '{actual_text}'"
 
@@ -45,12 +42,8 @@ def test_more_details(strengthInPeoplr_page):
     # Кликаем и ждём нужной страницы
     strengthInPeoplr_page.click_more_details_and_wait_for_about_page()
 
-    # Проверяем URL
-    expected_url = "https://tensor.ru/about"
-    current_url = strengthInPeoplr_page.browser.current_url
-    assert current_url == expected_url, f"Ожидался URL '{expected_url}', получен: '{current_url}'"
-
-    print(f'Переход на {expected_url} выполнен успешно')
+    assert strengthInPeoplr_page.current_url() == "https://tensor.ru/about",  \
+        "URL не совпадает с ожидаемым"
 
 # ЦЕЛЬ: Проверить наличие баннера "Тензор" на странице контактов Saby
 def test_tenzor(tenzor_page):
@@ -71,13 +64,7 @@ def test_tenzor_click(tenzor_page):
 # ЦЕЛЬ: Проверить наличие раздела "Работаем"
 # и убедиться, что все фотографии в этом разделе имеют одинаковый размер
 def test_weAreWorking(working_page):
-    """
-    Тест проверяет наличие заголовка 'Работаем'
-    и одинаковые размеры всех изображений в этом разделе.
-    """
-    # Открытие страницы (если фикстура не делает этого)
-    working_page.open("https://tensor.ru/about") 
-
+    
     # Проверяем наличие заголовка
     working_page.weAreWorking_title()
     print('Раздел "Работаем" присутствует на странице')

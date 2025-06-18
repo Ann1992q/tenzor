@@ -18,70 +18,39 @@ class WorkingPage(BasePage):
     """
     
     working = (By.CSS_SELECTOR, '.tensor_ru-About__block3 .tensor_ru-header-h2')
-    
     photo_locator = (By.CSS_SELECTOR, '.tensor_ru-About__block3 > .s-Grid-container img')
 
 
-    def __init__(self, browser):
-        """
-        Инициализирует экземпляр WorkingPage.
-
-        :param browser: WebDriver-сессия, передаваемая из pytest-фикстуры
-        :type browser: selenium.webdriver.remote.webdriver.WebDriver
-        """
-        super().__init__(browser)
-
-    def open(self, url):
-        """
-        Открывает указанную веб-страницу в браузере.
-
-        :param url: URL адрес целевой страницы
-        :type url: str
-        """
-        self.browser.get(url)
-    
     def weAreWorking_title(self):
         """
-        Находит заголовок 'Работаем', прокручивает к нему и проверяет текст.
+        Проверяет наличие заголовка 'Работаем' и его текст.
+
+        Прокручивает к заголовку и убеждается, что он отображается корректно.
         """
-        element = WebDriverWait(self.browser, 20).until(
-            EC.visibility_of_element_located(self.working),
-            message="Заголовок 'Работаем' не найден"
-        )
-
-        # Прокрутка к элементу
-        element.location_once_scrolled_into_view
-
-        # Проверка текста
-        actual_text = element.text.strip()
         expected_text = "Работаем"
+        self.scroll_to(*self.working)
+        element = self.find_visible(*self.working)
+
+        actual_text = self.get_text(element)
         assert actual_text == expected_text, \
             f"Ожидался текст '{expected_text}', получено: '{actual_text}'"
 
-        return element
-
     def get_all_photos(self):
         """
-        Ожидает появления всех изображений в разделе 'Работаем' и возвращает их
-        список.
+        Находит все видимые фотографии в разделе 'Работаем'.
 
-        :return: Список элементов изображений в разделе "Работаем"
-        :rtype: List[selenium.webdriver.remote.webelement.WebElement]
-        :raises selenium.common.exceptions.TimeoutException:
-            Если ни одно изображение не стало видимым за заданное время
+        Returns:
+            list[WebElement]: Список элементов изображений.
         """
-        return WebDriverWait(self.browser, 10).until(
-            EC.visibility_of_all_elements_located(self.photo_locator)
-        )
+        return self.find_all_visible(*self.photo_locator)
+       
 
     def check_all_photos_same_size(self):
         """
         Проверяет, что все изображения в разделе 'Работаем' имеют одинаковый размер.
 
-        :raises AssertionError:
-            Если хотя бы одно изображение отличается по ширине или высоте
-        :raises selenium.common.exceptions.TimeoutException:
-            Если изображения не загрузились за заданное время
+        Raises:
+            AssertionError: Если хотя бы одно фото отличается по ширине или высоте.
         """
         photos = self.get_all_photos()
 

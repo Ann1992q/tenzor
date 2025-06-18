@@ -73,16 +73,58 @@ def browser_with_download(request):
     yield driver
     driver.quit()
 
+
+# === Вспомогательные фабличные функции ===
+
+def _open_saby_page(browser, page_class):
+    """
+    Вспомогательная фабричная функция для открытия страниц Saby.ru.
+    
+    Args:
+        browser: Экземпляр WebDriver.
+        page_class: Класс страницы (например, ContactsPage).
+
+    Returns:
+        page_class: Инициализированный экземпляр страницы.
+    """
+    page = page_class(browser)
+    page.open("https://saby.ru")
+    return page
+
+def _open_contacts_page(browser, page_class):
+    """
+    Вспомогательная фабричная функция для открытия страницы https://saby.ru/contacts. 
+    
+    Args:
+        browser: Экземпляр WebDriver.
+        page_class: Класс страницы (например, TenzorPage, RegionsPage).
+
+    Returns:
+        page_class: Инициализированный экземпляр нужной страницы.
+    """
+    page = page_class(browser)
+    page.open("https://saby.ru/contacts")
+    return page
+
 # === Фикстуры страниц ===
 @pytest.fixture
 def contacts_page(browser):
-    url = "https://saby.ru"
-    page = ContactsPage(browser)
-    page.open(url)
-    return page
+    """
+    Фикстура для работы с разделом 'Контакты' на главной странице Saby.ru.
+
+    Returns:
+        ContactsPage: Страница с кнопкой 'Контакты'.
+    """
+    return _open_saby_page(browser, ContactsPage)
 
 @pytest.fixture
 def strengthInPeoplr_page(browser):
+    """
+    Фикстура для работы с блоком 'Сила в людях' на главной странице Tensor.ru.
+
+    Returns:
+        StrengthPage: Страница с блоком 'Сила в людях'.
+    """
     url = "https://tensor.ru/"
     page = StrengthPage(browser)
     page.open(url)
@@ -90,13 +132,22 @@ def strengthInPeoplr_page(browser):
 
 @pytest.fixture
 def tenzor_page(browser):
-    url = "https://saby.ru/contacts"
-    page = TenzorPage(browser)
-    page.open(url)
-    return page
+    """
+    Фикстура для работы с баннером 'Тензор' на странице контактов Saby.ru.
+
+    Returns:
+        TenzorPage: Страница с баннером 'Тензор'.
+    """
+    return _open_contacts_page(browser, TenzorPage)
 
 @pytest.fixture
 def working_page(browser):
+    """
+    Фикстура для работы с разделом 'Работаем' на странице tensor.ru/about.
+
+    Returns:
+        WorkingPage: Страница с разделом 'Работаем'.
+    """
     url = "https://tensor.ru/about"
     page = WorkingPage(browser)
     page.open(url)
@@ -104,27 +155,47 @@ def working_page(browser):
 
 @pytest.fixture
 def region_page_contacts(browser):
-    url = "https://saby.ru"
-    page = RegionsPage(browser)
-    page.open(url)
-    return page
+    """
+    Фикстура для работы с регионами на главной странице saby.ru.
+
+    Returns:
+        RegionsPage: Страница с регионами.
+    """
+    return _open_saby_page(browser, RegionsPage)
 
 @pytest.fixture
 def region_page(browser):
-    url = "https://saby.ru/contacts"
-    page = RegionsPage(browser)
-    page.open(url)
-    return page
+    """
+    Фикстура для работы с регионами на странице контактов Saby.ru.
+
+    Returns:
+        RegionsPage: Страница с регионами на странице контактов.
+    """
+    return _open_contacts_page(browser, RegionsPage)
 
 @pytest.fixture
 def download_page(browser):
-    url = "https://saby.ru"
-    page = DownloadPage(browser)
-    page.open(url)
-    return page
+    """
+    Фикстура для работы с кнопкой 'Скачать локальные версии' на saby.ru.
+
+    Returns:
+        DownloadPage: Страница с кнопкой 'Скачать'.
+
+    """
+    return _open_saby_page(browser, DownloadPage)
 
 @pytest.fixture
 def plugin_page(browser_with_download, request):
+    """
+    Фикстура для работы с плагином СБИС на странице загрузки.
+
+    Args:
+        browser_with_download (WebDriver): Браузер с настройками загрузки.
+        request: pytest request object для получения пути теста.
+
+    Returns:
+        SabyPluginPage: Страница с плагином СБИС.
+    """
     url = "https://saby.ru/download?tab=plugin&innerTab=default"
     test_dir = os.path.dirname(request.path)
     page = SabyPluginPage(browser_with_download, test_dir=test_dir)
