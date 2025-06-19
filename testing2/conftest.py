@@ -1,6 +1,4 @@
-from selenium.webdriver.remote.webdriver import WebDriver
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from pages.contacts_page import ContactsPage
 from pages.strengthInPeoplr_page import StrengthPage
 from pages.tenzor_page import TenzorPage

@@ -1,9 +1,3 @@
-from pages.contacts_page import ContactsPage
-from pages.strengthInPeoplr_page import StrengthPage
-from pages.tenzor_page import TenzorPage
-from pages.weAreWorking_page import WorkingPage
-from selenium.webdriver.common.by import By
-
 # ЦЕЛЬ ТЕСТА: Проверить наличие кнопки "Контакты" на главной странице
 def test_btn_contacts_exist(contacts_page):
     assert contacts_page.btn_contacts_is_displayed() ,"Кнопка 'Контакты' не отображается"

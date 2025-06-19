@@ -110,6 +110,11 @@ class BasePage:
             EC.visibility_of_all_elements_located((by, value))
         )
     
+    def click_via_js(self, by, value):
+        """Кликает по элементу с помощью JavaScript."""
+        element = self.find_visible(by, value)
+        self.browser.execute_script("arguments[0].click();", element)
+    
     # === Вспомогательные методы для работы с элементами ===
     
     def get_text(self, element):
@@ -170,6 +175,9 @@ class BasePage:
             str: Текущий URL.
         """
         return self.browser.current_url
+    
+
+
 
     
 
